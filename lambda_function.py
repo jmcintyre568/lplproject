@@ -64,7 +64,7 @@ def lambda_handler(event, context):
 
         # 3. Call the Bedrock Agent
         AGENT_ID = 'LVAP5E9ECG'
-        AGENT_ALIAS_ID = 'RAIOTFSOPE'
+        AGENT_ALIAS_ID = 'BJNNRIQKD3'
         logger.info(f"Calling Bedrock Agent with Agent ID: {AGENT_ID}, Alias ID: {AGENT_ALIAS_ID}")
         
         raw_completion = bedrock_agent.invoke_agent(
