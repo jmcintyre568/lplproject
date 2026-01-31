@@ -63,8 +63,10 @@ def lambda_handler(event, context):
             logger.info(f"Generated prompt: {prompt}")
 
         # 3. Call the Bedrock Agent
+        #THESE CREDENTIALS EXPIRE JAN 31 2026 AND DONT POSE RISK
         AGENT_ID = 'LVAP5E9ECG'
         AGENT_ALIAS_ID = 'BJNNRIQKD3'
+        
         logger.info(f"Calling Bedrock Agent with Agent ID: {AGENT_ID}, Alias ID: {AGENT_ALIAS_ID}")
         
         raw_completion = bedrock_agent.invoke_agent(
