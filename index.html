@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPL College Savings Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-blue-600 p-6 text-white text-center">
+            <h1 class="text-3xl font-bold">LPL College Readiness Coach</h1>
+            <p class="opacity-90">Personalized AI guidance for your family's future.</p>
+        </div>
+
+        <div class="p-8">
+            <form id="savingsForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Student's Age</label>
+                    <input type="number" id="age" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 5">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Current 529 Balance ($)</label>
+                    <input type="number" id="savings" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="5000">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Monthly Contribution ($)</label>
+                    <input type="number" id="monthly" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="200">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Target College</label>
+                    <select id="collegeType" class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="inState">In-State Public ($12k/yr)</option>
+                        <option value="outOfState">Out-of-State Public ($28k/yr)</option>
+                        <option value="private">Private University ($45k/yr)</option>
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700">Investment Style</label>
+                    <select id="riskStyle" class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="conservative">Conservative (Low Risk / 4% Return)</option>
+                        <option value="balanced" selected>Balanced (Moderate Risk / 6% Return)</option>
+                        <option value="growth">Growth (High Risk / 8% Return)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="md:col-span-2 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition transform active:scale-95">
+                    Calculate My Readiness
+                </button>
+            </form>
+
+            <div id="loading" class="hidden mt-8 text-center">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="mt-2 text-gray-600 italic">Consulting the AI Coach...</p>
+            </div>
+
+            <div id="results" class="hidden mt-8 p-6 bg-blue-50 border-l-4 border-blue-600 rounded-lg">
+                <h3 class="text-xl font-bold text-blue-800 mb-2">Advisor Insights</h3>
+                <p id="aiResponse" class="text-gray-800 leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('savingsForm');
+        const resultsDiv = document.getElementById('results');
+        const loadingDiv = document.getElementById('loading');
+        const aiResponseText = document.getElementById('aiResponse');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                age: document.getElementById('age').value,
+                savings: document.getElementById('savings').value,
+                monthly: document.getElementById('monthly').value,
+                collegeType: document.getElementById('collegeType').value,
+                riskStyle: document.getElementById('riskStyle').value
+            };
+
+            loadingDiv.classList.remove('hidden');
+            resultsDiv.classList.add('hidden');
+
+            try {
+                console.log("Sending data to backend:", formData);
+                
+                setTimeout(() => {
+                    loadingDiv.classList.add('hidden');
+                    resultsDiv.classList.remove('hidden');
+                    aiResponseText.innerText = "Based on your plan, you are making great progress! By staying on a Balanced track, you'll bridge your gap for the private university goal. Contact your LPL advisor to finalize this strategy.";
+                }, 2000);
+
+            } catch (error) {
+                console.error(error);
+                loadingDiv.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
