@@ -1,105 +1,347 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LPL College Savings Coach</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>College Readiness Check • LPL Prototype</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              lpl: {
+                navy: '#0B1F3B',
+                blue: '#1F5AA6',
+                sky: '#EAF1FB',
+                ink: '#0F172A',
+                slate: '#64748B',
+                border: '#E2E8F0'
+              },
+              status: {
+                good: '#0F6B3E',
+                warn: '#C47F00',
+                bad:  '#8A1C2B'
+              }
+              }
+          }
+        }
+      }
+    </script>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-6">
+<div class="w-full max-w-3xl bg-white rounded-2xl shadow-sm ring-1 ring-lpl-border overflow-hidden">
+<div class="bg-lpl-navy p-6 text-white">
+<div class="flex items-center justify-between gap-6">
+<div>
+<p class="text-xs tracking-wide uppercase text-white/70">LPL University • College Planning Prototype</p>
+<h1 class="text-3xl font-semibold mt-1">College Readiness Check</h1>
+<p class="mt-1 text-white/80 text-sm">A quick readiness estimate with risk-aware guidance.</p>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<span class="text-xs text-white/70">Powered by</span>
+<span class="px-2 py-1 rounded-md bg-white/10 text-xs font-semibold">AWS</span>
 
-    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div class="bg-blue-600 p-6 text-white text-center">
-            <h1 class="text-3xl font-bold">LPL College Readiness Coach</h1>
-            <p class="opacity-90">Personalized AI guidance for your family's future.</p>
-        </div>
-
-        <div class="p-8">
-            <form id="savingsForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Student's Age</label>
-                    <input type="number" id="age" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 5">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Current 529 Balance ($)</label>
-                    <input type="number" id="savings" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="5000">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Monthly Contribution ($)</label>
-                    <input type="number" id="monthly" required class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="200">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Target College</label>
-                    <select id="collegeType" class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="inState">In-State Public ($12k/yr)</option>
-                        <option value="outOfState">Out-of-State Public ($28k/yr)</option>
-                        <option value="private">Private University ($45k/yr)</option>
-                    </select>
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-semibold text-gray-700">Investment Style</label>
-                    <select id="riskStyle" class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="conservative">Conservative (Low Risk / 4% Return)</option>
-                        <option value="balanced" selected>Balanced (Moderate Risk / 6% Return)</option>
-                        <option value="growth">Growth (High Risk / 8% Return)</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="md:col-span-2 bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition transform active:scale-95">
-                    Calculate My Readiness
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/10 text-white/80 text-[11px] font-bold cursor-help" title="Hackathon prototype deployed on AWS.">i</span></div>
+</div>
+</div>
+<div class="p-8">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="savingsForm">
+<div>
+<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Student's Age</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter the student’s current age in years.">i</span></div></label>
+<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="age" placeholder="e.g. 5" required="" type="number"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Current 529 Balance ($)</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter your current 529 savings balance in dollars (USD).">i</span></div></label>
+<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="savings" inputmode="numeric" pattern="[0-9,]*" placeholder="5000" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Monthly Contribution ($)</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter how much you contribute to the 529 each month in dollars (USD).">i</span></div></label>
+<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="monthly" inputmode="numeric" pattern="[0-9,]*" placeholder="200" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Target College</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Select the target college type. Estimates use national averages for tuition, room, and board.">i</span></div></label>
+<select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="collegeType">
+<option value="inState">In-State Public ($12k/yr)</option>
+<option value="outOfState">Out-of-State Public ($28k/yr)</option>
+<option value="private">Private University ($45k/yr)</option>
+</select>
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Investment Style</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Choose an investment style. Conservative prioritizes stability; Growth seeks higher returns with more volatility.">i</span></div></label>
+<select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="riskStyle">
+<option value="conservative">Conservative (Low Risk / 4% Return)</option>
+<option selected="" value="balanced">Balanced (Moderate Risk / 6% Return)</option>
+<option value="growth">Growth (High Risk / 8% Return)</option>
+</select>
+</div>
+<button class="md:col-span-2 bg-lpl-blue text-white font-semibold py-3.5 rounded-xl hover:brightness-95 transition active:scale-[0.99]" type="submit">
+                    Check My College Plan
                 </button>
-            </form>
+</form>
+<div class="hidden mt-8 text-center" id="loading">
+<div class="animate-spin rounded-full h-10 w-10 border-b-2 border-lpl-blue mx-auto"></div>
+<p class="mt-2 text-gray-600 italic">Generating advisor-style guidance…</p>
+</div>
+<div class="hidden mt-8" id="results">
+<div class="rounded-2xl ring-1 ring-lpl-border bg-white p-6">
+<div class="flex items-start justify-between gap-4">
+<div>
+<h3 class="text-lg font-semibold text-lpl-ink">Results</h3>
+<p class="text-sm text-slate-600 mt-1">Estimated readiness based on your inputs and selected investment style.</p>
+</div>
+<div class="shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1" id="statusBadge"></div>
+</div>
+<div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
+<p class="text-xs uppercase tracking-wide text-slate-500">Projected 4-year tuition</p>
+<p class="mt-2 text-xl font-semibold text-lpl-ink" id="tuitionOut">$—</p>
+</div>
+<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
+<p class="text-xs uppercase tracking-wide text-slate-500">Projected savings at 18</p>
+<p class="mt-2 text-xl font-semibold text-lpl-ink" id="savingsOut">$—</p>
+</div>
+<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
+<p class="text-xs uppercase tracking-wide text-slate-500">Gap / surplus</p>
+<p class="mt-2 text-xl font-semibold text-lpl-ink" id="gapOut">$—</p>
+</div>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between text-xs text-slate-600">
+<span>Goal funded</span>
+<span id="coveragePct">—</span>
+</div>
+<div class="mt-2 h-2 w-full rounded-full bg-slate-100 ring-1 ring-lpl-border overflow-hidden">
+<div class="h-full rounded-full" id="progressFill" style="width:0%"></div>
+</div>
+</div>
 
-            <div id="loading" class="hidden mt-8 text-center">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
-                <p class="mt-2 text-gray-600 italic">Consulting the AI Coach...</p>
-            </div>
+<div class="mt-5 rounded-xl bg-lpl-sky p-5 ring-1 ring-lpl-border">
+<p class="text-xs uppercase tracking-wide text-slate-600">Advisor insight</p>
+<p class="mt-2 text-slate-800 leading-relaxed" id="aiResponse"></p>
+</div>
+<div class="mt-4 flex flex-col sm:flex-row gap-3">
+<a class="w-full sm:w-auto bg-lpl-blue text-white font-semibold px-4 py-2.5 rounded-xl hover:brightness-95 transition inline-flex items-center justify-center" id="advisorCTA" href="https://www.lpl.com/join-lpl/managing-your-business/wealth-management-solutions.html" target="_blank" rel="noopener noreferrer">
+    Schedule time with an advisor
+  </a>
+<button class="w-full sm:w-auto border border-lpl-border text-lpl-ink font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition" id="downloadBtn" type="button">
+    Download readiness summary
+  </button>
+</div>
 
-            <div id="results" class="hidden mt-8 p-6 bg-blue-50 border-l-4 border-blue-600 rounded-lg">
-                <h3 class="text-xl font-bold text-blue-800 mb-2">Advisor Insights</h3>
-                <p id="aiResponse" class="text-gray-800 leading-relaxed"></p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const form = document.getElementById('savingsForm');
+<button class="mt-5 w-full flex items-center justify-between rounded-xl px-4 py-3 ring-1 ring-lpl-border hover:bg-slate-50 transition" id="toggleExplain" type="button">
+<span class="text-sm font-semibold text-lpl-ink">Why am I getting this result?</span>
+<span class="text-slate-500" id="chev">▾</span>
+</button>
+<div class="hidden mt-3 rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border text-sm text-slate-700" id="explainBox">
+<ul class="list-disc pl-5 space-y-1">
+<li><span class="font-semibold">Years until college:</span> <span id="yearsOut">—</span></li>
+<li><span class="font-semibold">Tuition inflation assumed:</span> <span id="inflationOut">5%</span> annually</li>
+<li><span class="font-semibold">Investment style:</span> <span id="styleOut">—</span> (<span id="returnOut">—</span> assumed annual return)</li>
+<li><span class="font-semibold">Status thresholds:</span> On Track ≥ 90%, Slightly Behind 70–89%, At Risk &lt; 70%</li>
+</ul>
+</div>
+<p class="mt-5 text-xs text-slate-500">Hypothetical example for illustrative purposes only. Past performance does not guarantee future results. Consult with a financial professional for personalized advice.</p>
+</div>
+</div>
+</div>
+</div>
+<script>
+const form = document.getElementById('savingsForm');
         const resultsDiv = document.getElementById('results');
         const loadingDiv = document.getElementById('loading');
         const aiResponseText = document.getElementById('aiResponse');
 
+        const tuitionOut = document.getElementById('tuitionOut');
+        const savingsOut = document.getElementById('savingsOut');
+        const gapOut = document.getElementById('gapOut');
+        const yearsOut = document.getElementById('yearsOut');
+        const styleOut = document.getElementById('styleOut');
+        const returnOut = document.getElementById('returnOut');
+        const statusBadge = document.getElementById('statusBadge');
+
+        const toggleExplain = document.getElementById('toggleExplain');
+        const explainBox = document.getElementById('explainBox');
+        const chev = document.getElementById('chev');
+
+        const USD = (n) => {
+            if (!isFinite(n)) return '$—';
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+        };
+
+        const parseMoney = (v) => {
+            if (v === null || v === undefined) return 0;
+            const n = String(v).replace(/[^0-9]/g, '');
+            return n ? Number(n) : 0;
+        };
+
+        function formatMoneyInput(el) {
+            const raw = String(el.value || '').replace(/[^0-9]/g, '');
+            if (!raw) { el.value = ''; return; }
+            el.value = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(raw));
+        }
+
+        // Format currency fields on blur for a more professional feel
+        ['savings','monthly'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('blur', () => formatMoneyInput(el));
+        });
+
+        const TUITION_BASE = {
+            inState: 12000,
+            outOfState: 28000,
+            private: 45000
+        };
+
+        const STYLE = {
+            conservative: { label: 'Conservative', annualReturn: 0.04, note: 'lower growth, more stability' },
+            balanced:     { label: 'Balanced',     annualReturn: 0.06, note: 'moderate growth and risk' },
+            growth:       { label: 'Growth',       annualReturn: 0.08, note: 'higher growth, higher volatility' }
+        };
+
+        const TUITION_INFLATION = 0.05;
+        const COLLEGE_AGE = 18;
+
+        function futureValue(principal, monthlyContribution, annualReturn, years) {
+            const n = Math.max(0, Math.round(years * 12));
+            const r = annualReturn / 12;
+            if (n === 0) return Number(principal) || 0;
+
+            const pv = (Number(principal) || 0) * Math.pow(1 + r, n);
+            const fvContrib = (Number(monthlyContribution) || 0) * ((Math.pow(1 + r, n) - 1) / r);
+            return pv + fvContrib;
+        }
+
+        function projectedTuitionTotal(collegeType, years) {
+            const base = TUITION_BASE[collegeType] ?? 12000;
+            const year1 = base * Math.pow(1 + TUITION_INFLATION, Math.max(0, years));
+            // Simple 4-year total (keeps demo easy and explainable)
+            return year1 * 4;
+        }
+
+        function computeStatus(coverage) {
+            if (coverage >= 0.90) return { key: 'onTrack', label: 'On Track', color: 'status.good', ring: 'ring-[color:var(--tw-status-good)]' };
+            if (coverage >= 0.70) return { key: 'behind', label: 'Slightly Behind', color: 'status.warn' };
+            return { key: 'risk', label: 'At Risk', color: 'status.bad' };
+        }
+
+        
+        function setBadge(statusLabel) {
+            // Professional "traffic light" palette (muted, enterprise)
+            const palette = {
+                good: { bg: '#E7F3EC', text: '#0F6B3E', ring: '#BFE1CC' },   // forest green
+                warn: { bg: '#FFF4E5', text: '#8A5A00', ring: '#F3D0A2' },   // amber
+                bad:  { bg: '#F8E9EC', text: '#8A1C2B', ring: '#E7B9C1' }    // muted crimson
+            };
+
+            statusBadge.className = 'shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1';
+            let p = palette.bad;
+            if (statusLabel === 'On Track') p = palette.good;
+            else if (statusLabel === 'Slightly Behind') p = palette.warn;
+
+            statusBadge.style.backgroundColor = p.bg;
+            statusBadge.style.color = p.text;
+            statusBadge.style.borderColor = p.ring;
+            statusBadge.textContent = statusLabel;
+        }
+
+        toggleExplain?.addEventListener('click', () => {
+            const isHidden = explainBox.classList.contains('hidden');
+            if (isHidden) {
+                explainBox.classList.remove('hidden');
+                chev.textContent = '▴';
+            } else {
+                explainBox.classList.add('hidden');
+                chev.textContent = '▾';
+            }
+        });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = {
-                age: document.getElementById('age').value,
-                savings: document.getElementById('savings').value,
-                monthly: document.getElementById('monthly').value,
-                collegeType: document.getElementById('collegeType').value,
-                riskStyle: document.getElementById('riskStyle').value
-            };
+            const age = Number(document.getElementById('age').value);
+            const savings = parseMoney(document.getElementById('savings').value);
+            const monthly = parseMoney(document.getElementById('monthly').value);
+            const collegeType = document.getElementById('collegeType').value;
+            const riskStyle = document.getElementById('riskStyle').value;
 
+            const years = Math.max(0, COLLEGE_AGE - age);
+            const style = STYLE[riskStyle] || STYLE.balanced;
+
+            const tuitionTotal = projectedTuitionTotal(collegeType, years);
+            const savingsFV = futureValue(savings, monthly, style.annualReturn, years);
+            const gap = tuitionTotal - savingsFV;
+            const coverage = tuitionTotal > 0 ? (savingsFV / tuitionTotal) : 0;
+
+            const status = coverage >= 0.90 ? 'On Track' : (coverage >= 0.70 ? 'Slightly Behind' : 'At Risk');
+
+            // UI: show loading
             loadingDiv.classList.remove('hidden');
             resultsDiv.classList.add('hidden');
 
-            try {
-                console.log("Sending data to backend:", formData);
-                
-                setTimeout(() => {
-                    loadingDiv.classList.add('hidden');
-                    resultsDiv.classList.remove('hidden');
-                    aiResponseText.innerText = "Based on your plan, you are making great progress! By staying on a Balanced track, you'll bridge your gap for the private university goal. Contact your LPL advisor to finalize this strategy.";
-                }, 2000);
+            // Fill numeric outputs immediately (so it feels real even if AI is slow)
+            tuitionOut.textContent = USD(tuitionTotal);
+            savingsOut.textContent = USD(savingsFV);
+            gapOut.textContent = (gap > 0 ? USD(gap) : (gap < 0 ? `+${USD(Math.abs(gap))}` : USD(0)));
 
+            yearsOut.textContent = String(years);
+            styleOut.textContent = style.label;
+            returnOut.textContent = `${Math.round(style.annualReturn * 100)}%`;
+
+            setBadge(status);
+
+            // Progress bar (% funded)
+            const pct = Math.max(0, Math.min(1, coverage));
+            const pctLabel = `${Math.round(pct * 100)}%`;
+            const pctEl = document.getElementById('coveragePct');
+            const fillEl = document.getElementById('progressFill');
+            if (pctEl) pctEl.textContent = pctLabel;
+            if (fillEl) {
+                fillEl.style.width = `${Math.round(pct * 100)}%`;
+                fillEl.style.backgroundColor = (status === 'On Track') ? '#0F6B3E' : (status === 'Slightly Behind') ? '#C47F00' : '#8A1C2B';
+            }
+
+
+            // Simulate AI / backend call (swap this for API Gateway + Lambda + )
+            try {
+                await new Promise(res => setTimeout(res, 900));
+
+                const gapSentence = gap > 0
+                    ? `You’re projected to be short by about ${USD(gap)}.`
+                    : `You’re projected to have a surplus of about ${USD(Math.abs(gap))}.`;
+
+                const nextStep = gap > 0
+                    ? `One practical next step: consider increasing your monthly contribution by a small amount or reviewing your college savings plan with an advisor.`
+                    : `One practical next step: consider confirming your target school assumptions and keeping contributions steady, then review with an advisor.`;
+
+                aiResponseText.textContent =
+                    `${status} — ${gapSentence} ` +
+                    `Because you selected a ${style.label} investment style, we assumed ${style.note}. ` +
+                    `${nextStep} ` +
+                    `Estimates only. Not financial advice.`;
+
+                loadingDiv.classList.add('hidden');
+                resultsDiv.classList.remove('hidden');
             } catch (error) {
                 console.error(error);
                 loadingDiv.classList.add('hidden');
             }
         });
-    </script>
+    
+        // CTA: advisor scheduling + download
+        const advisorCTA = document.getElementById('advisorCTA');
+        if (advisorCTA) {
+            advisorCTA.addEventListener('click', () => {
+                alert('Demo CTA: In production, this would open the client’s advisor scheduling flow.');
+            });
+        }
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', () => window.print());
+        }
+
+</script>
 </body>
 </html>
