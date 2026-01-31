@@ -164,41 +164,57 @@
 
         // 1. MAIN CALCULATOR SUBMIT
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            loadingDiv.classList.remove('hidden');
-            resultsDiv.classList.add('hidden');
+    e.preventDefault();
+    loadingDiv.classList.remove('hidden');
+    resultsDiv.classList.add('hidden');
 
-            const payload = {
-                age: document.getElementById('age').value,
-                savings: document.getElementById('savings').value.replace(/[^0-9]/g, ''),
-                monthly: document.getElementById('monthly').value.replace(/[^0-9]/g, ''),
-                collegeType: document.getElementById('collegeType').value,
-                riskStyle: document.getElementById('riskStyle').value
-            };
+    const payload = {
+        age: document.getElementById('age').value,
+        savings: document.getElementById('savings').value.replace(/[^0-9]/g, ''),
+        monthly: document.getElementById('monthly').value.replace(/[^0-9]/g, ''),
+        collegeType: document.getElementById('collegeType').value,
+        riskStyle: document.getElementById('riskStyle').value
+    };
 
-            try {
-                const response = await fetch(LAMBDA_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await response.json();
-                
-                // Update Numeric UI (Mock logic for demo speed)
-                document.getElementById('tuitionOut').textContent = USD(180000); // Demo placeholder
-                document.getElementById('savingsOut').textContent = USD(parseNumber(payload.savings) + 50000);
-                document.getElementById('gapOut').textContent = USD(30000);
-                
-                aiResponseText.textContent = data.answer;
-                setBadge("Slightly Behind"); // Logic placeholder
-
-                loadingDiv.classList.add('hidden');
-                resultsDiv.classList.remove('hidden');
-            } catch (error) {
-                console.error(error);
-                loadingDiv.classList.add('hidden');
-            }
+    try {
+        const response = await fetch(LAMBDA_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Update Numeric UI with actual Lambda response
+        document.getElementById('tuitionOut').textContent = USD(data.totalFutureCost);
+        document.getElementById('savingsOut').textContent = USD(data.projectedSavings);
+        document.getElementById('gapOut').textContent = USD(data.totalFutureCost - data.projectedSavings);
+
+        // Update AI response (if applicable)
+        aiResponseText.textContent = data.message || "Calculation complete.";
+
+        // Set badge based on funding gap
+        const fundingGap = data.totalFutureCost - data.projectedSavings;
+        if (fundingGap <= 0) {
+            setBadge("On Track");
+        } else if (fundingGap <= 50000) {
+            setBadge("Slightly Behind");
+        } else {
+            setBadge("At Risk");
+        }
+
+        loadingDiv.classList.add('hidden');
+        resultsDiv.classList.remove('hidden');
+    } catch (error) {
+        console.error("Error fetching data from Lambda:", error);
+        loadingDiv.classList.add('hidden');
+        alert("An error occurred while processing your request. Please try again.");
+    }
+});
 
         // 2. CHAT BOX LOGIC
         chatForm.addEventListener('submit', async (e) => {
@@ -240,7 +256,7 @@
             chatHistory.appendChild(div);
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
-
+        
         function parseNumber(v) { return Number(v.replace(/[^0-9]/g, '')) || 0; }
     </script>
 </body>
