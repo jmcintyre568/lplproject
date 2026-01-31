@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>College Readiness Check • LPL Prototype</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>College Readiness Check • LPL Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
       tailwind.config = {
         theme: {
           extend: {
@@ -24,303 +23,174 @@
                 warn: '#C47F00',
                 bad:  '#8A1C2B'
               }
-              }
+            }
           }
         }
       }
     </script>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-6">
-<div class="w-full max-w-3xl bg-white rounded-2xl shadow-sm ring-1 ring-lpl-border overflow-hidden">
-<div class="bg-lpl-navy p-6 text-white">
-<div class="flex items-center justify-between gap-6">
-<div>
-<p class="text-xs tracking-wide uppercase text-white/70">LPL University • College Planning Prototype</p>
-<h1 class="text-3xl font-semibold mt-1">College Readiness Check</h1>
-<p class="mt-1 text-white/80 text-sm">A quick readiness estimate with risk-aware guidance.</p>
-</div>
-<div class="hidden sm:flex items-center gap-2">
-<span class="text-xs text-white/70">Powered by</span>
-<span class="px-2 py-1 rounded-md bg-white/10 text-xs font-semibold">AWS</span>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center py-12 px-6">
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-sm ring-1 ring-lpl-border overflow-hidden">
+        <div class="bg-lpl-navy p-6 text-white">
+            <div class="flex items-center justify-between gap-6">
+                <div>
+                    <p class="text-xs tracking-wide uppercase text-white/70">LPL University • College Planning Prototype</p>
+                    <h1 class="text-3xl font-semibold mt-1">College Readiness Check</h1>
+                    <p class="mt-1 text-white/80 text-sm">Personalized guidance with real-time AI coaching.</p>
+                </div>
+                <div class="hidden sm:flex items-center gap-2">
+                    <span class="px-2 py-1 rounded-md bg-white/10 text-xs font-semibold">AWS Bedrock</span>
+                </div>
+            </div>
+        </div>
 
-<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/10 text-white/80 text-[11px] font-bold cursor-help" title="Hackathon prototype deployed on AWS.">i</span></div>
-</div>
-</div>
-<div class="p-8">
-<form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="savingsForm">
-<div>
-<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Student's Age</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter the student’s current age in years.">i</span></div></label>
-<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="age" placeholder="e.g. 5" required="" type="number"/>
-</div>
-<div>
-<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Current 529 Balance ($)</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter your current 529 savings balance in dollars (USD).">i</span></div></label>
-<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="savings" inputmode="numeric" pattern="[0-9,]*" placeholder="5000" required="" type="text"/>
-</div>
-<div>
-<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Monthly Contribution ($)</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Enter how much you contribute to the 529 each month in dollars (USD).">i</span></div></label>
-<input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="monthly" inputmode="numeric" pattern="[0-9,]*" placeholder="200" required="" type="text"/>
-</div>
-<div>
-<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Target College</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Select the target college type. Estimates use national averages for tuition, room, and board.">i</span></div></label>
-<select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="collegeType">
-<option value="inState">In-State Public ($12k/yr)</option>
-<option value="outOfState">Out-of-State Public ($28k/yr)</option>
-<option value="private">Private University ($45k/yr)</option>
-</select>
-</div>
-<div class="md:col-span-2">
-<label class="block text-sm font-semibold text-gray-700"><div class="flex items-center gap-2"><span>Investment Style</span><span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold cursor-help" title="Choose an investment style. Conservative prioritizes stability; Growth seeks higher returns with more volatility.">i</span></div></label>
-<select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="riskStyle">
-<option value="conservative">Conservative (Low Risk / 4% Return)</option>
-<option selected="" value="balanced">Balanced (Moderate Risk / 6% Return)</option>
-<option value="growth">Growth (High Risk / 8% Return)</option>
-</select>
-</div>
-<button class="md:col-span-2 bg-lpl-blue text-white font-semibold py-3.5 rounded-xl hover:brightness-95 transition active:scale-[0.99]" type="submit">
+        <div class="p-8">
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="savingsForm">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Student's Age</label>
+                    <input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="age" placeholder="e.g. 5" required type="number"/>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Current 529 Balance ($)</label>
+                    <input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="savings" placeholder="5000" required type="text"/>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Monthly Contribution ($)</label>
+                    <input class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="monthly" placeholder="200" required type="text"/>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Target College</label>
+                    <select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="collegeType">
+                        <option value="inState">In-State Public ($12k/yr)</option>
+                        <option value="outOfState">Out-of-State Public ($28k/yr)</option>
+                        <option value="private">Private University ($45k/yr)</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700">Investment Style</label>
+                    <select class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-lpl-blue outline-none" id="riskStyle">
+                        <option value="conservative">Conservative (Low Risk / 4% Return)</option>
+                        <option selected value="balanced">Balanced (Moderate Risk / 6% Return)</option>
+                        <option value="growth">Growth (High Risk / 8% Return)</option>
+                    </select>
+                </div>
+                <button class="md:col-span-2 bg-lpl-blue text-white font-semibold py-3.5 rounded-xl hover:brightness-95 transition active:scale-[0.99]" type="submit">
                     Check My College Plan
                 </button>
-</form>
-<div class="hidden mt-8 text-center" id="loading">
-<div class="animate-spin rounded-full h-10 w-10 border-b-2 border-lpl-blue mx-auto"></div>
-<p class="mt-2 text-gray-600 italic">Generating advisor-style guidance…</p>
-</div>
-<div class="hidden mt-8" id="results">
-<div class="rounded-2xl ring-1 ring-lpl-border bg-white p-6">
-<div class="flex items-start justify-between gap-4">
-<div>
-<h3 class="text-lg font-semibold text-lpl-ink">Results</h3>
-<p class="text-sm text-slate-600 mt-1">Estimated readiness based on your inputs and selected investment style.</p>
-</div>
-<div class="shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1" id="statusBadge"></div>
-</div>
-<div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
-<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
-<p class="text-xs uppercase tracking-wide text-slate-500">Projected 4-year tuition</p>
-<p class="mt-2 text-xl font-semibold text-lpl-ink" id="tuitionOut">$—</p>
-</div>
-<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
-<p class="text-xs uppercase tracking-wide text-slate-500">Projected savings at 18</p>
-<p class="mt-2 text-xl font-semibold text-lpl-ink" id="savingsOut">$—</p>
-</div>
-<div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border">
-<p class="text-xs uppercase tracking-wide text-slate-500">Gap / surplus</p>
-<p class="mt-2 text-xl font-semibold text-lpl-ink" id="gapOut">$—</p>
-</div>
-</div>
-<div class="mt-4">
-<div class="flex items-center justify-between text-xs text-slate-600">
-<span>Goal funded</span>
-<span id="coveragePct">—</span>
-</div>
-<div class="mt-2 h-2 w-full rounded-full bg-slate-100 ring-1 ring-lpl-border overflow-hidden">
-<div class="h-full rounded-full" id="progressFill" style="width:0%"></div>
-</div>
-</div>
+            </form>
 
-<div class="mt-5 rounded-xl bg-lpl-sky p-5 ring-1 ring-lpl-border">
-<p class="text-xs uppercase tracking-wide text-slate-600">Advisor insight</p>
-<p class="mt-2 text-slate-800 leading-relaxed" id="aiResponse"></p>
-</div>
-<div class="mt-4 flex flex-col sm:flex-row gap-3">
-<a class="w-full sm:w-auto bg-lpl-blue text-white font-semibold px-4 py-2.5 rounded-xl hover:brightness-95 transition inline-flex items-center justify-center" id="advisorCTA" href="https://www.lpl.com/join-lpl/managing-your-business/wealth-management-solutions.html" target="_blank" rel="noopener noreferrer">
-    Schedule time with an advisor
-  </a>
-<button class="w-full sm:w-auto border border-lpl-border text-lpl-ink font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition" id="downloadBtn" type="button">
-    Download readiness summary
-  </button>
-</div>
+            <div class="hidden mt-8 text-center" id="loading">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-lpl-blue mx-auto"></div>
+                <p class="mt-2 text-gray-600 italic">Generating advisor-style guidance…</p>
+            </div>
 
-<button class="mt-5 w-full flex items-center justify-between rounded-xl px-4 py-3 ring-1 ring-lpl-border hover:bg-slate-50 transition" id="toggleExplain" type="button">
-<span class="text-sm font-semibold text-lpl-ink">Why am I getting this result?</span>
-<span class="text-slate-500" id="chev">▾</span>
-</button>
-<div class="hidden mt-3 rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border text-sm text-slate-700" id="explainBox">
-<ul class="list-disc pl-5 space-y-1">
-<li><span class="font-semibold">Years until college:</span> <span id="yearsOut">—</span></li>
-<li><span class="font-semibold">Tuition inflation assumed:</span> <span id="inflationOut">5%</span> annually</li>
-<li><span class="font-semibold">Investment style:</span> <span id="styleOut">—</span> (<span id="returnOut">—</span> assumed annual return)</li>
-<li><span class="font-semibold">Status thresholds:</span> On Track ≥ 90%, Slightly Behind 70–89%, At Risk &lt; 70%</li>
-</ul>
-</div>
-<p class="mt-5 text-xs text-slate-500">Hypothetical example for illustrative purposes only. Past performance does not guarantee future results. Consult with a financial professional for personalized advice.</p>
-</div>
-</div>
-</div>
-</div>
-<script>
-const form = document.getElementById('savingsForm');
+            <div class="hidden mt-8" id="results">
+                <div class="rounded-2xl ring-1 ring-lpl-border bg-white p-6 mb-8">
+                    <div class="flex items-start justify-between gap-4">
+                        <h3 class="text-lg font-semibold text-lpl-ink">Your Projection</h3>
+                        <div class="shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1" id="statusBadge"></div>
+                    </div>
+                    <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border text-center">
+                            <p class="text-[10px] uppercase tracking-wider text-slate-500">Projected Tuition</p>
+                            <p class="mt-1 text-xl font-bold text-lpl-ink" id="tuitionOut">$—</p>
+                        </div>
+                        <div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border text-center">
+                            <p class="text-[10px] uppercase tracking-wider text-slate-500">Projected Savings</p>
+                            <p class="mt-1 text-xl font-bold text-lpl-ink" id="savingsOut">$—</p>
+                        </div>
+                        <div class="rounded-xl bg-slate-50 p-4 ring-1 ring-lpl-border text-center">
+                            <p class="text-[10px] uppercase tracking-wider text-slate-500">Funding Gap</p>
+                            <p class="mt-1 text-xl font-bold text-lpl-ink" id="gapOut">$—</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 rounded-xl bg-lpl-sky p-5 border-l-4 border-lpl-blue">
+                        <p class="text-xs uppercase font-bold text-lpl-blue">Initial Advisor Insight</p>
+                        <p class="mt-2 text-slate-800 text-sm leading-relaxed" id="aiResponse"></p>
+                    </div>
+                </div>
+
+                <div class="border-t border-lpl-border pt-8">
+                    <h3 class="text-lg font-semibold text-lpl-ink flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Ask your AI Coach a Question
+                    </h3>
+                    <p class="text-sm text-slate-500 mb-4">"How can I bridge this $50k gap?" or "Should I save more monthly?"</p>
+                    
+                    <div id="chatHistory" class="space-y-4 max-h-64 overflow-y-auto mb-4 p-2 bg-slate-50 rounded-lg border border-lpl-border hidden">
+                        </div>
+
+                    <form id="chatForm" class="flex gap-2">
+                        <input type="text" id="chatInput" placeholder="Type your follow-up question..." 
+                               class="flex-1 p-3 border rounded-xl focus:ring-2 focus:ring-lpl-blue outline-none text-sm"/>
+                        <button type="submit" class="bg-lpl-navy text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-lpl-blue transition">
+                            Send
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('savingsForm');
+        const chatForm = document.getElementById('chatForm');
         const resultsDiv = document.getElementById('results');
         const loadingDiv = document.getElementById('loading');
         const aiResponseText = document.getElementById('aiResponse');
+        const chatHistory = document.getElementById('chatHistory');
+        const chatInput = document.getElementById('chatInput');
 
-        const tuitionOut = document.getElementById('tuitionOut');
-        const savingsOut = document.getElementById('savingsOut');
-        const gapOut = document.getElementById('gapOut');
-        const yearsOut = document.getElementById('yearsOut');
-        const styleOut = document.getElementById('styleOut');
-        const returnOut = document.getElementById('returnOut');
-        const statusBadge = document.getElementById('statusBadge');
+        const LAMBDA_URL = 'https://yaop7absrkhux7ejxhgch4smni0lhcbs.lambda-url.us-east-1.on.aws/';
 
-        const toggleExplain = document.getElementById('toggleExplain');
-        const explainBox = document.getElementById('explainBox');
-        const chev = document.getElementById('chev');
+        // Helper: Format as USD
+        const USD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
 
-        const USD = (n) => {
-            if (!isFinite(n)) return '$—';
-            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
-        };
-
-        const parseMoney = (v) => {
-            if (v === null || v === undefined) return 0;
-            const n = String(v).replace(/[^0-9]/g, '');
-            return n ? Number(n) : 0;
-        };
-
-        function formatMoneyInput(el) {
-            const raw = String(el.value || '').replace(/[^0-9]/g, '');
-            if (!raw) { el.value = ''; return; }
-            el.value = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Number(raw));
-        }
-
-        // Format currency fields on blur for a more professional feel
-        ['savings','monthly'].forEach((id) => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.addEventListener('blur', () => formatMoneyInput(el));
-        });
-
-        const TUITION_BASE = {
-            inState: 12000,
-            outOfState: 28000,
-            private: 45000
-        };
-
-        const STYLE = {
-            conservative: { label: 'Conservative', annualReturn: 0.04, note: 'lower growth, more stability' },
-            balanced:     { label: 'Balanced',     annualReturn: 0.06, note: 'moderate growth and risk' },
-            growth:       { label: 'Growth',       annualReturn: 0.08, note: 'higher growth, higher volatility' }
-        };
-
-        const TUITION_INFLATION = 0.05;
-        const COLLEGE_AGE = 18;
-
-        function futureValue(principal, monthlyContribution, annualReturn, years) {
-            const n = Math.max(0, Math.round(years * 12));
-            const r = annualReturn / 12;
-            if (n === 0) return Number(principal) || 0;
-
-            const pv = (Number(principal) || 0) * Math.pow(1 + r, n);
-            const fvContrib = (Number(monthlyContribution) || 0) * ((Math.pow(1 + r, n) - 1) / r);
-            return pv + fvContrib;
-        }
-
-        function projectedTuitionTotal(collegeType, years) {
-            const base = TUITION_BASE[collegeType] ?? 12000;
-            const year1 = base * Math.pow(1 + TUITION_INFLATION, Math.max(0, years));
-            // Simple 4-year total (keeps demo easy and explainable)
-            return year1 * 4;
-        }
-
-        function computeStatus(coverage) {
-            if (coverage >= 0.90) return { key: 'onTrack', label: 'On Track', color: 'status.good', ring: 'ring-[color:var(--tw-status-good)]' };
-            if (coverage >= 0.70) return { key: 'behind', label: 'Slightly Behind', color: 'status.warn' };
-            return { key: 'risk', label: 'At Risk', color: 'status.bad' };
-        }
-
-        
+        // Helper: Format badges
         function setBadge(statusLabel) {
-            // Professional "traffic light" palette (muted, enterprise)
             const palette = {
-                good: { bg: '#E7F3EC', text: '#0F6B3E', ring: '#BFE1CC' },   // forest green
-                warn: { bg: '#FFF4E5', text: '#8A5A00', ring: '#F3D0A2' },   // amber
-                bad:  { bg: '#F8E9EC', text: '#8A1C2B', ring: '#E7B9C1' }    // muted crimson
+                'On Track': { bg: '#E7F3EC', text: '#0F6B3E', ring: '#BFE1CC' },
+                'Slightly Behind': { bg: '#FFF4E5', text: '#8A5A00', ring: '#F3D0A2' },
+                'At Risk': { bg: '#F8E9EC', text: '#8A1C2B', ring: '#E7B9C1' }
             };
-
-            statusBadge.className = 'shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1';
-            let p = palette.bad;
-            if (statusLabel === 'On Track') p = palette.good;
-            else if (statusLabel === 'Slightly Behind') p = palette.warn;
-
+            const p = palette[statusLabel] || palette['At Risk'];
             statusBadge.style.backgroundColor = p.bg;
             statusBadge.style.color = p.text;
             statusBadge.style.borderColor = p.ring;
             statusBadge.textContent = statusLabel;
+            statusBadge.className = 'shrink-0 px-3 py-1 rounded-full text-xs font-semibold ring-1';
         }
 
-        toggleExplain?.addEventListener('click', () => {
-            const isHidden = explainBox.classList.contains('hidden');
-            if (isHidden) {
-                explainBox.classList.remove('hidden');
-                chev.textContent = '▴';
-            } else {
-                explainBox.classList.add('hidden');
-                chev.textContent = '▾';
-            }
-        });
-
+        // 1. MAIN CALCULATOR SUBMIT
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            const age = Number(document.getElementById('age').value);
-            const savings = parseMoney(document.getElementById('savings').value);
-            const monthly = parseMoney(document.getElementById('monthly').value);
-            const collegeType = document.getElementById('collegeType').value;
-            const riskStyle = document.getElementById('riskStyle').value;
-
-            const years = Math.max(0, COLLEGE_AGE - age);
-            const style = STYLE[riskStyle] || STYLE.balanced;
-
-            const tuitionTotal = projectedTuitionTotal(collegeType, years);
-            const savingsFV = futureValue(savings, monthly, style.annualReturn, years);
-            const gap = tuitionTotal - savingsFV;
-            const coverage = tuitionTotal > 0 ? (savingsFV / tuitionTotal) : 0;
-
-            const status = coverage >= 0.90 ? 'On Track' : (coverage >= 0.70 ? 'Slightly Behind' : 'At Risk');
-
-            // UI: show loading
             loadingDiv.classList.remove('hidden');
             resultsDiv.classList.add('hidden');
 
-            // Fill numeric outputs immediately (so it feels real even if AI is slow)
-            tuitionOut.textContent = USD(tuitionTotal);
-            savingsOut.textContent = USD(savingsFV);
-            gapOut.textContent = (gap > 0 ? USD(gap) : (gap < 0 ? `+${USD(Math.abs(gap))}` : USD(0)));
+            const payload = {
+                age: document.getElementById('age').value,
+                savings: document.getElementById('savings').value.replace(/[^0-9]/g, ''),
+                monthly: document.getElementById('monthly').value.replace(/[^0-9]/g, ''),
+                collegeType: document.getElementById('collegeType').value,
+                riskStyle: document.getElementById('riskStyle').value
+            };
 
-            yearsOut.textContent = String(years);
-            styleOut.textContent = style.label;
-            returnOut.textContent = `${Math.round(style.annualReturn * 100)}%`;
-
-            setBadge(status);
-
-            // Progress bar (% funded)
-            const pct = Math.max(0, Math.min(1, coverage));
-            const pctLabel = `${Math.round(pct * 100)}%`;
-            const pctEl = document.getElementById('coveragePct');
-            const fillEl = document.getElementById('progressFill');
-            if (pctEl) pctEl.textContent = pctLabel;
-            if (fillEl) {
-                fillEl.style.width = `${Math.round(pct * 100)}%`;
-                fillEl.style.backgroundColor = (status === 'On Track') ? '#0F6B3E' : (status === 'Slightly Behind') ? '#C47F00' : '#8A1C2B';
-            }
-
-
-            // Simulate AI / backend call (swap this for API Gateway + Lambda + )
             try {
-                await new Promise(res => setTimeout(res, 900));
-
-                const gapSentence = gap > 0
-                    ? `You’re projected to be short by about ${USD(gap)}.`
-                    : `You’re projected to have a surplus of about ${USD(Math.abs(gap))}.`;
-
-                const nextStep = gap > 0
-                    ? `One practical next step: consider increasing your monthly contribution by a small amount or reviewing your college savings plan with an advisor.`
-                    : `One practical next step: consider confirming your target school assumptions and keeping contributions steady, then review with an advisor.`;
-
-                aiResponseText.textContent =
-                    `${status} — ${gapSentence} ` +
-                    `Because you selected a ${style.label} investment style, we assumed ${style.note}. ` +
-                    `${nextStep} ` +
-                    `Estimates only. Not financial advice.`;
+                const response = await fetch(LAMBDA_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                
+                // Update Numeric UI (Mock logic for demo speed)
+                document.getElementById('tuitionOut').textContent = USD(180000); // Demo placeholder
+                document.getElementById('savingsOut').textContent = USD(parseNumber(payload.savings) + 50000);
+                document.getElementById('gapOut').textContent = USD(30000);
+                
+                aiResponseText.textContent = data.answer;
+                setBadge("Slightly Behind"); // Logic placeholder
 
                 loadingDiv.classList.add('hidden');
                 resultsDiv.classList.remove('hidden');
@@ -329,19 +199,49 @@ const form = document.getElementById('savingsForm');
                 loadingDiv.classList.add('hidden');
             }
         });
-    
-        // CTA: advisor scheduling + download
-        const advisorCTA = document.getElementById('advisorCTA');
-        if (advisorCTA) {
-            advisorCTA.addEventListener('click', () => {
-                alert('Demo CTA: In production, this would open the client’s advisor scheduling flow.');
-            });
-        }
-        const downloadBtn = document.getElementById('downloadBtn');
-        if (downloadBtn) {
-            downloadBtn.addEventListener('click', () => window.print());
+
+        // 2. CHAT BOX LOGIC
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message to UI
+            appendMessage('user', message);
+            chatInput.value = '';
+            chatHistory.classList.remove('hidden');
+
+            try {
+                // We send the message as a "monthly" override or custom field 
+                // for the Lambda to treat as a conversational follow-up
+                const response = await fetch(LAMBDA_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: message,
+                        isChat: true,
+                        sessionId: 'hackathon-session-123' 
+                    })
+                });
+                const data = await response.json();
+                appendMessage('ai', data.answer);
+            } catch (error) {
+                appendMessage('ai', "I'm having trouble connecting right now. Please try again!");
+            }
+        });
+
+        function appendMessage(sender, text) {
+            const div = document.createElement('div');
+            div.className = sender === 'user' ? 'text-right' : 'text-left';
+            const span = document.createElement('span');
+            span.className = `inline-block p-3 rounded-2xl text-sm ${sender === 'user' ? 'bg-lpl-blue text-white rounded-tr-none' : 'bg-white border border-lpl-border text-slate-800 rounded-tl-none'}`;
+            span.textContent = text;
+            div.appendChild(span);
+            chatHistory.appendChild(div);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
-</script>
+        function parseNumber(v) { return Number(v.replace(/[^0-9]/g, '')) || 0; }
+    </script>
 </body>
 </html>
