@@ -1,7 +1,7 @@
 LPL College Readiness Check
 
 
-LPL Financial’s 4th Annual University Hackathon — Using AI to Build AI
+LPL Financial’s 4th Annual University Hackathon - Using AI to Build AI
 
 
 A lightweight, AI-assisted prototype that helps families quickly understand whether they are on track to fund college education and how investment risk impacts that outcome.
